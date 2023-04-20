@@ -18,6 +18,9 @@ export default createGlobalStyle`
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+    background-color: ${({ theme }: { theme: TTheme }) =>
+      theme.color.neutrals.darker};
+    color: ${({ theme }) => theme.color.neutrals.lightest};
   }
   #root {
     flex: 1;
@@ -39,19 +42,18 @@ export default createGlobalStyle`
 
   *::-webkit-scrollbar-track
   {
-    background-color: ${({ theme }: { theme: TTheme }) =>
-      theme.color.neutrals.darkest};
+    background-color: ${({ theme }) => theme.color.neutrals.darkest};
   }
 
   *::-webkit-scrollbar
   {
-    width: 8px;
+    width: 6px;
     background-color: ${({ theme }) => theme.color.neutrals.lighter};
   }
 
   *::-webkit-scrollbar-thumb
   {
-    background-color: rgba(75, 75, 75, .8 );
+    background-color: rgba(175, 175, 175, .6 );
     border-radius: 5px;
   }
 `;

@@ -1,6 +1,7 @@
 const config = {
   color: {
     neutrals: {
+      lightest: "#fff",
       lighter: "#fefefe",
       light: "#ebebeb",
       medium: "#3f3f3f",
