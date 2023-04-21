@@ -6,6 +6,4 @@ export const Container = styled.div`
   padding: 24px;
 `;
 
-export const ItemContainer = styled.ul`
-  list-style: none;
-`;
+export const ItemContainer = styled.ul``;

@@ -1,17 +1,22 @@
-const config = {
+import { DefaultTheme } from "styled-components";
+
+const theme: DefaultTheme = {
   color: {
     neutrals: {
       lightest: "#fff",
-      lighter: "#fefefe",
-      light: "#ebebeb",
-      medium: "#3f3f3f",
-      dark: "#1e1e1e",
+      lighter: "#eee",
+      light: "rgba(170, 170, 170, .5)",
+      medium: "#444",
+      dark: "#262626",
       darker: "#181818",
       darkest: "#040404",
     },
     primary: "#ffc400",
     secondary: "#fb3f45",
+    opacityWhite: "rgba(240, 240, 240, .15)",
   },
 };
 
-export default config;
+export type TTheme = typeof theme;
+
+export default theme;

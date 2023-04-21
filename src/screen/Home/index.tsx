@@ -6,6 +6,7 @@ import { Container, ItemContainer } from './styles';
 import ItemBox from '@/components/ItemBox';
 
 const Home: React.FC = () => {
+
   return (
     <Container>
       <SearchFilter/>

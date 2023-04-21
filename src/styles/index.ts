@@ -1,7 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import theme from "./theme";
-
-type TTheme = typeof theme;
+import theme, { TTheme } from "./theme";
 
 export default createGlobalStyle`
   * {
@@ -10,7 +8,9 @@ export default createGlobalStyle`
     outline: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    font-family: 'Poppins', sans-serif;
+    color: ${({ theme }) => theme.color.neutrals.lightest};
+    font-family: 'Roboto', sans-serif;
+    transition: all ease-in 200ms;
   }
   html, body, div#root {
     display: flex;
@@ -20,7 +20,6 @@ export default createGlobalStyle`
     align-items: stretch;
     background-color: ${({ theme }: { theme: TTheme }) =>
       theme.color.neutrals.darker};
-    color: ${({ theme }) => theme.color.neutrals.lightest};
   }
   #root {
     flex: 1;
@@ -29,7 +28,6 @@ export default createGlobalStyle`
     display: none;
   }
   a {
-    color: #000;
     text-decoration: none;
     &:active {
       background: none;
@@ -38,6 +36,11 @@ export default createGlobalStyle`
   button {
     border: none;
     background: none;
+    cursor: pointer;
+  }
+
+  ul {
+    list-style: none;
   }
 
   *::-webkit-scrollbar-track
