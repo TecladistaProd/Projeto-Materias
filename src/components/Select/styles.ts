@@ -56,11 +56,12 @@ export const SelectBtn = styled.button<ISProps>`
 
 export const PopperContainer = styled.div<{ css: CSSObject }>`
   ${({ theme, css: style }) => css(style)};
+  z-index: 99;
 `;
 
 export const SelectOpts = styled(motion.ul)`
   min-width: 100%;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.17);
   backdrop-filter: blur(5px);
   padding: 4px;
   border-radius: 4px;

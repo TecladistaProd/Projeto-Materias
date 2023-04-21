@@ -2,18 +2,19 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 900px;
-  max-width: calc(100vw - 32px);
-  position: absolute;
+  max-width: calc(100vw - 96px);
+  position: fixed;
   top: 16px;
   left: 50%;
   transform: translate(-50%, 0);
   background-color: ${({ theme }) => theme.color.opacityWhite};
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   border-radius: 4px;
   padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  z-index: 2;
 `;
 
 export const Row = styled.div`
@@ -24,6 +25,7 @@ export const Row = styled.div`
   gap: 8px;
   z-index: 1;
   justify-content: space-between;
+  flex-wrap: wrap;
   div.col {
     display: inline-flex;
   }
