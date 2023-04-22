@@ -112,6 +112,11 @@ const Select: React.FC<IProps | IProps2> = ({ value, options, placeholder, multi
         onClick={handleSelecting}
         outlined={!!outlined}>
         {title}
+        {
+          !!Array.isArray(value) && value.length > 0 && (
+            <span className='values-info'>{value.length}</span>
+          )
+        }
         <span className={`is-icon ${isSelecting ? 'active' : ''}`}>
           <TbChevronDown  fontSize={18} />
         </span>

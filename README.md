@@ -26,3 +26,5 @@ Projeto Criado usando React, Vite, React-popper, styled-components, framer-motio
 ### Libs para padronizar commit-msg
 
 Foi utilizado libs como _commitlint_, _husky_, _cz-conventional-changelog_, _husky_, _commitizen_ para seguir um padrão nas emissões de mensagens de commits visando o padrão **conventional commits**, porém não foi seguido de forma 100% fidedigna.
+
+[Link para o Projeto web rodando](https://spontaneous-dasik-3ff8d2.netlify.app)

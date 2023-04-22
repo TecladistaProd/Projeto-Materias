@@ -17,6 +17,7 @@ export const Container = styled.div`
     font-size: 14px;
   }
 `;
+
 export const SelectBtn = styled.button<ISProps>`
   display: inline-flex;
   align-items: center;
@@ -35,6 +36,22 @@ export const SelectBtn = styled.button<ISProps>`
     css`
       min-width: ${sizeToPixel(minW)};
     `}
+
+  ${({ theme }) => css`
+    span.values-info {
+      font-size: 10px;
+      min-width: 17px;
+      min-height: 13px;
+      align-items: center;
+      justify-content: center;
+      display: inline-flex;
+      margin: 0 3px;
+      margin-right: 1px;
+      background-color: ${theme.color.neutrals.lightest};
+      color: ${theme.color.neutrals.darkest};
+      border-radius: 50%;
+    }
+  `}
   ${({ theme, outlined }) =>
     outlined &&
     css`
