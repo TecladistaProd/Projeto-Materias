@@ -23,7 +23,7 @@ import SkeletonItemBox from '@/components/SkeletonItemBox';
 const Home: React.FC = () => {
   const [refetch, setRefetch] = useState(true);
   const [filters, setFilters] = useState(new Filters());
-  const { data, isLoading } = useQuery("products", async () => {
+  const { data, isLoading, isError } = useQuery("products", async () => {
     const response = await api.get<IProduct[]>("/products", {
       params: JSON.parse(JSON.stringify(filters)),
       paramsSerializer: params => {
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
       </filtersContext.Provider>
       <ItemContainer>
         {
-          isLoading ? Array(10).fill(0).map((_, k) => (
+          (isLoading || isError) ? Array(10).fill(0).map((_, k) => (
             <li key={k}>
               <SkeletonItemBox />
             </li>
