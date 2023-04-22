@@ -2,6 +2,8 @@
 
 Projeto Criado usando React, Vite, React-popper, styled-components, framer-motion, axios, @react-hookz/web, miragejs, react-query, react-icons.
 
+> Link para o projeto online no final do README
+
 ## Justificativas
 
 **Vite**: Ao invés de ser utilizado o cra (create-react-app) foi utilizado `yarn create vite` para desafiar a utilizar algo diferente do padrão.
