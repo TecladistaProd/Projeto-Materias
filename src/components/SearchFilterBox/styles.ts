@@ -15,6 +15,9 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 10px;
   z-index: 2;
+  @media screen and (max-width: 800px) {
+    max-width: calc(100vw - 48px);
+  }
 `;
 
 export const Row = styled.div`
@@ -28,6 +31,8 @@ export const Row = styled.div`
   flex-wrap: wrap;
   div.col {
     display: inline-flex;
+    flex-wrap: wrap;
+    gap: 10px 0;
   }
 `;
 

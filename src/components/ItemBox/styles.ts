@@ -14,7 +14,13 @@ export const Container = styled(motion.div)`
   max-width: calc(100vw - 96px);
   --max-w: calc(100vw - 96px);
   --w: 330px;
+  --min-w: 330px;
   z-index: 1;
+  @media screen and (max-width: 800px) {
+    max-width: calc(100vw - 48px);
+    --max-w: calc(100vw - 48px);
+    --min-w: calc(100vw - 48px);
+  }
   @media screen and (min-width: 826px) {
     &:not(.expanded) {
       max-width: 330px;
@@ -23,8 +29,8 @@ export const Container = styled(motion.div)`
   }
   @media screen and (max-width: 825px) {
     &:not(.expanded) {
-      width: calc(100vw - 96px);
-      --w: calc(100vw - 96px);
+      width: calc(100vw - 48px);
+      --w: calc(100vw - 48px);
       flex: 1;
     }
   }
@@ -135,6 +141,7 @@ export const ImageContainer = styled.div`
 
 export const Image = styled.img`
   width: 270px;
+  max-width: 100%;
   margin: 0 auto;
   &.expanded {
     width: auto;
@@ -185,6 +192,9 @@ export const Col = styled.div`
     padding: 20px;
     padding-bottom: 10px;
     height: 100%;
+    @media screen and (max-width: 500px) {
+      padding: 8px;
+    }
   }
 `;
 
@@ -201,6 +211,10 @@ export const Title = styled.h2`
     text-transform: unset;
     font-size: 24px;
     margin-bottom: 10px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   &::first-letter {
     text-transform: uppercase;
@@ -215,6 +229,13 @@ export const InfoContent = styled.div`
   flex: 1;
   max-height: 100%;
   height: 100%;
+  &.expanded > *,
+  &.expanded li,
+  &.expanded div.info-row,
+  &.expanded div.info-row * {
+    flex: 0 0;
+    width: fit-content;
+  }
   @media screen and (max-width: 1039px) {
     margin-bottom: 32px;
   }
@@ -232,6 +253,10 @@ export const InfoContent = styled.div`
     width: fit-content;
     &.is-2 {
       margin-bottom: 10px;
+    }
+    * {
+      display: inline-flex;
+      min-width: max-content;
     }
   }
   p.is-2 {
@@ -255,18 +280,25 @@ export const InfoContent = styled.div`
       margin-top: 20px;
       gap: 20px;
       width: fit-content;
+      flex-wrap: wrap;
+      flex-direction: row;
+      @media screen and (max-width: 468px) {
+        flex-direction: column;
+      }
       li {
         position: relative;
-        &:not(:first-child)::before {
-          position: absolute;
-          left: -12px;
-          top: 50%;
-          transform: translate(0, -50%);
-          content: "";
-          width: 3.7px;
-          height: 3.7px;
-          border-radius: 50%;
-          background-color: ${theme.color.neutrals.lighter};
+        @media screen and (min-width: 468px) {
+          &:not(:first-child)::before {
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translate(0, -50%);
+            content: "";
+            width: 3.7px;
+            height: 3.7px;
+            border-radius: 50%;
+            background-color: ${theme.color.neutrals.lighter};
+          }
         }
         padding: 10px 8px;
         border-top: 1px solid ${theme.color.neutrals.medium};
@@ -288,6 +320,7 @@ export const BtnRow = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
   &:not(.expanded) .col,
   & {
     justify-content: space-between;
@@ -305,6 +338,7 @@ export const BtnRow = styled.div`
       gap: 8px;
       display: inline-flex;
       align-items: center;
+      flex-wrap: wrap;
     }
     .i-col {
       max-width: fit-content;

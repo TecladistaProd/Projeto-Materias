@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { 
   FiDownload,
   FiHeart,
@@ -9,8 +9,13 @@ import {
 import { TfiClose } from 'react-icons/tfi';
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import { Variants } from "framer-motion";
+import { useMutation } from "react-query";
 
 import { IProduct } from '@/interfaces/product';
+
+import api from '@/services/api';
+
+import useEventBus from '@/hooks/useEventBus';
 
 import {
   Container,
@@ -29,12 +34,12 @@ const variants: Variants = {
   initial: {
     maxWidth: "var(--max-w)",
     width: "var(--w)",
-    minWidth: 330,
+    minWidth: "var(--min-w)",
     minHeight: 390,
   },
   expanded: {
-    width: "calc(100vw - 96px)",
-    maxWidth: "calc(100vw - 96px)",
+    width: "var(--max-w)",
+    maxWidth: "var(--max-w)",
     minHeight: 520,
   },
 };
@@ -49,7 +54,8 @@ const ItemBox: React.FC<IProduct> = ({
   surface,
   size,
   application,
-  reproduction
+  reproduction,
+  id
 }) => {
   const images = useMemo(() => Array(2).fill(thumbnailUrl), [thumbnailUrl]);
   const [imgIndex, setImgIndex] = useState(0);
@@ -57,6 +63,7 @@ const ItemBox: React.FC<IProduct> = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const expandedClass = useMemo(() => !isAnimating && isExpanded ? 'expanded' : '',
     [isExpanded, isAnimating]);
+  const eventBus = useEventBus();
 
   const handleClick = useCallback(() => {
     setIsAnimating(true);
@@ -68,7 +75,7 @@ const ItemBox: React.FC<IProduct> = ({
   }, []);
 
   const handleExpand = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!e.target.tagName.match(/(button|line|svg|span)/gi) && !isExpanded) {
+    if (!e.target.tagName.match(/(button|line|svg|span|path)/gi) && !isExpanded) {
       handleClick();
     }
   }, [handleClick, isExpanded]);
@@ -80,6 +87,34 @@ const ItemBox: React.FC<IProduct> = ({
       return nmb;
     });
   }, [images]);
+
+  const mutation = useMutation(
+    (data: string) => api.put(`product/${id}`, data),
+    {
+      onSuccess: () => {
+        eventBus.dispatchEvent('onQueryProducts');
+      },
+    }
+  );
+
+  const handleUpdate = useCallback((key: string) => {
+    mutation.mutate(key);
+  }, [mutation]);
+
+  const handleDownload = useCallback(() => {
+    const a = document.createElement('a');
+    a.href = thumbnailUrl;
+    a.download = `${title}-${Date.now()}.png`;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.onclick = () => {
+      setTimeout(() => {
+        document.body.removeChild(a);
+      }, 500)
+    }
+    a.click()
+    handleUpdate('totalDownloads')
+  }, [thumbnailUrl, title, handleUpdate]);
 
   return (
     <Container
@@ -187,19 +222,19 @@ const ItemBox: React.FC<IProduct> = ({
         <BtnRow className={expandedClass}>
           <div className="col">
             <div className="i-col">
-              <IconBtn className={expandedClass} is-down>
+              <IconBtn disabled={mutation.isLoading} onClick={handleDownload} className={expandedClass} is-down>
                 <span className='icon'><FiDownload /></span>
                 <span>{totalDownloads}</span>
                 <p className='only-expanded'>
                   Fazer download
                 </p>
               </IconBtn>
-              <IconBtn className={expandedClass}>
+              <IconBtn disabled={mutation.isLoading}  onClick={handleUpdate.bind(null, 'totalLikes')} className={expandedClass}>
                 <span className='icon'><FiHeart /></span>
                 <span>{totalLikes}</span>
               </IconBtn>
             </div>
-            <IconBtn className={expandedClass}>
+            <IconBtn disabled={mutation.isLoading}  onClick={handleUpdate.bind(null, 'totalBookmarks')} className={expandedClass}>
               <span className='icon'><FiBookmark /></span>
               <span>{totalBookmarks}</span>
             </IconBtn>

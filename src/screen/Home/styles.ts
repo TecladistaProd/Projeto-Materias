@@ -7,6 +7,19 @@ export const Container = styled.div`
   @media screen and (max-width: 1086px) {
     padding-top: 130px;
   }
+  @media screen and (max-width: 800px) {
+    padding: 24px;
+    padding-top: 130px;
+  }
+  @media screen and (max-width: 560px) {
+    padding-top: 180px;
+  }
+  @media screen and (max-width: 592px) {
+    padding-top: 210px;
+  }
+  @media screen and (max-width: 375px) {
+    padding-top: 240px;
+  }
 `;
 
 export const ItemContainer = styled.ul`

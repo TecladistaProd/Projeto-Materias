@@ -17,3 +17,5 @@ export interface IProduct {
   application: string;
   reproduction: string;
 }
+
+export type TProductFilter = Record<string, Array<string>>;

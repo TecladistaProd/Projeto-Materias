@@ -1,8 +1,9 @@
-import React, { useCallback, useMemo, useState, useLayoutEffect } from 'react';
+import React, { useCallback, useMemo, useState, useLayoutEffect, useRef, useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { TbChevronDown } from 'react-icons/tb';
 import { usePopper } from "react-popper";
 import { AnimatePresence } from 'framer-motion';
+import { CSSObject } from 'styled-components';
 
 import { Container, SelectOpts, Option, SelectBtn, ISProps, PopperContainer } from './styles';
 
@@ -13,14 +14,24 @@ interface IProps extends Partial<ISProps> {
     value: string;
   }>;
   placeholder?: string;
-  onChange?: (val: IProps['value']) => void;
+  onChange?: (val: string) => void;
+  multiSelect?: false;
 }
 
-const Select: React.FC<IProps> = ({ value, options, placeholder, onChange, outlined, minW }) => {
+interface IProps2 extends Omit<IProps, 'value' | 'onChange' | 'multiSelect'> {
+  value?: string[];
+  multiSelect: true;
+  onChange?: (val: string[]) => void;
+}
+
+const Select: React.FC<IProps | IProps2> = ({ value, options, placeholder, multiSelect, onChange, outlined, minW }) => {
   const [isSelecting, setIsSelecting] = useState(false);
   const [triggerEl, setTriggerEl] = useState<HTMLButtonElement | null>(null);
   const [popperEl, setPopperEl] = useState<HTMLDivElement | null>(null);
   const [width, setWidth] = useState('0px');
+  const valuesRef = useRef({
+    values: [] as string[],
+  });
   const { styles, attributes } = usePopper(
     triggerEl,
     popperEl,
@@ -61,20 +72,37 @@ const Select: React.FC<IProps> = ({ value, options, placeholder, onChange, outli
   }, [triggerEl, popperEl]);
   
   const title = useMemo(() => {
-    if (value && options.findIndex(i => i.value === value) > -1)
+    if (typeof value === 'string' && value && options.findIndex(i => i.value === value) > -1)
       return value
 
     return placeholder || 'Selecione';
   }, [value, placeholder, options]);
 
-  const handleSelect = useCallback((value: IProps['value']) => {
-    onChange?.(value);
-    setIsSelecting(false);
-  }, [onChange]);
+  const handleSelect = useCallback((value: string) => {
+    if (!multiSelect) {
+      onChange?.(value);
+      setIsSelecting(false);
+    }
+    else {
+      const index = valuesRef.current.values.indexOf(value);
+      const values = [...valuesRef.current.values];
+      if(index > -1) {
+        values.splice(index, 1)
+      } else {
+        values.push(value)
+      }
+      onChange?.(values);
+    }
+  }, [onChange, multiSelect]);
 
   const handleSelecting = useCallback(() => {
     setIsSelecting(v => !v);
   }, []);
+
+  useEffect(() => {
+    if(multiSelect && value)
+      valuesRef.current.values = value;
+  }, [multiSelect, value]);
 
   return (
     <Container>
@@ -93,7 +121,7 @@ const Select: React.FC<IProps> = ({ value, options, placeholder, onChange, outli
           createPortal(
             <AnimatePresence>
               <PopperContainer
-                css={{...styles.popper, minWidth: width} as any}
+                css={{...styles.popper, minWidth: width} as CSSObject}
                 {...attributes.popper}
                 ref={setPopperEl}>
                 <SelectOpts
@@ -104,7 +132,9 @@ const Select: React.FC<IProps> = ({ value, options, placeholder, onChange, outli
                   {
                     options.map((i, k) => (
                       <li key={k}>
-                        <Option onClick={handleSelect.bind(null, i.value)}>
+                        <Option
+                          className={value?.includes(i.value) ? 'selected' : ''}
+                          onClick={handleSelect.bind(null, value === i.value ? '' : i.value)}>
                           {i.label}
                         </Option>
                       </li>

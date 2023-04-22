@@ -55,7 +55,7 @@ export const SelectBtn = styled.button<ISProps>`
 `;
 
 export const PopperContainer = styled.div<{ css: CSSObject }>`
-  ${({ theme, css: style }) => css(style)};
+  ${({ css: style }) => css(style)};
   z-index: 99;
 `;
 
@@ -78,14 +78,16 @@ export const Option = styled.button`
   font-weight: bold;
   ${({ theme }) => css`
     color: ${theme.color.neutrals.dark};
-    text-shadow: 0.5px 0.5px 2px ${theme.color.neutrals.lightest};
+    text-shadow: 0.5px 0.5px 2px ${theme.color.neutrals.lightest},
+      1px 1px 3px #eee;
     &:hover {
       color: ${theme.color.neutrals.darkest};
       text-shadow: 0.5px 0.5px 2px ${theme.color.neutrals.lightest},
         1px 1px 2.5px ${theme.color.neutrals.lightest},
         2px 2px 3.5px ${theme.color.neutrals.lightest};
     }
-    &:active {
+    &:active,
+    &.selected {
       text-shadow: 0 0 2px ${theme.color.neutrals.darker},
         0 0 10px ${theme.color.neutrals.lightest},
         0 0 15px ${theme.color.neutrals.lightest},

@@ -14,10 +14,12 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.7",
+    "@react-hookz/web": "^23.0.0",
     "@stardust-ds/react": "^0.8.0",
     "axios": "^1.3.6",
     "framer-motion": "^10.12.4",
     "miragejs": "^0.1.47",
+    "qs": "^6.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
+    "@types/qs": "^6.9.7",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
