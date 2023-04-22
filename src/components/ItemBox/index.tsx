@@ -75,6 +75,8 @@ const ItemBox: React.FC<IProduct> = ({
   }, []);
 
   const handleExpand = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (!e.target.tagName.match(/(button|line|svg|span|path)/gi) && !isExpanded) {
       handleClick();
     }

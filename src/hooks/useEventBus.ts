@@ -14,9 +14,9 @@ import {
 } from "@/interfaces/eventBus";
 
 const EventBusContext = createContext<IEB>({
-  addEventListener: (eventName, event) => null,
-  removeEventListener: (eventName, event) => null,
-  dispatchEvent: ((eventName, ...data) => null) as TDispatchEventDefault,
+  addEventListener: () => null,
+  removeEventListener: () => null,
+  dispatchEvent: (() => null) as TDispatchEventDefault,
 });
 
 function useEventBus(): IEB {

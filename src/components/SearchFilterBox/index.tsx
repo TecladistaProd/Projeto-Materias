@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FiBookmark } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { useQuery } from 'react-query';
