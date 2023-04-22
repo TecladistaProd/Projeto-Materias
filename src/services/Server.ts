@@ -56,7 +56,7 @@ window.server = createServer({
 
   routes() {
     this.namespace = "api";
-    this.timing = getRandomNumber(400, 900);
+    this.timing = getRandomNumber(900, 2000);
 
     this.get("/products", async (schema, request) => {
       if (Object.keys(request.queryParams).length === 0)
